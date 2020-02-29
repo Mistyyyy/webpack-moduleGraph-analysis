@@ -1,0 +1,7 @@
+# exclude the node_modules
+
+node_modules
+
+# exclude output files
+
+public

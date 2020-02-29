@@ -1,17 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Graphin, { Utils } from "@antv/graphin";
+import { Utils } from "@antv/graphin";
+import { Tabs, Button } from 'antd';
+import ModuleGraph from 'Component/module-graph.jsx';
 
 import "./root.css";
 
-const data = Utils.mock(13)
-  .circle()
-  .graphin();
+const { TabPane } = Tabs;
 
 const App = () => {
+  const data = Utils.mock(13).circle().graphin();
+
   return (
     <div className="App">
-      <Graphin data={data} />
+      <Tabs defaultActiveKey="1" onChange={() => {}}>
+        <TabPane tab="Module Graph" key="1">
+          <ModuleGraph data={data} />
+        </TabPane>
+        <TabPane tab="Chunk Graph" key="2">
+          Content of Chunk Graph
+        </TabPane>
+      </Tabs>
     </div>
   );
 };

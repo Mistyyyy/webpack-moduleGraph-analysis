@@ -8,35 +8,53 @@ module.exports = {
     main: './site/app.jsx',
   },
 
+  context: __dirname,
   mode: 'development',
 
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[hash].js',
     chunkFilename: '[name].[contenthash].js',
+    publicPath: './',
   },
 
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
     alias: {
       Component: path.resolve(__dirname, './site/component'),
-    }
+    },
+    modules: ['node_modules'],
+    symlinks: false
   },
 
   externals: {
-    // react: 'React',
-    // 'react-dom': 'ReactDOM',
+    react: 'React',
+    'react-dom': 'ReactDOM',
   },
 
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.m?jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
+            babelrc: false,
             cacheDirectory: true,
+            presets: [
+              '@babel/preset-react'
+            ],
+            plugins: [
+                [
+                  "import",
+                  {
+                    "libraryName": "antd",
+                    "libraryDirectory": "es",
+                    "style": "css" // `style: true` 会加载 less 文件
+                  }
+              ]
+            ]
           }
         }
       },
@@ -63,21 +81,16 @@ module.exports = {
   optimization: {
     runtimeChunk: true,
     splitChunks: {
-      chunks: 'initial',
-      // maxSize: 500000,
-      // minSize: 300000,
+      chunks: 'all',
     }
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      // title: 'ModuleGraph Analysis'
       template: './index.html',
       filename: './index.html',
     }),
-    new CleanWebpackPlugin(),
   ],
-
-  watch: true
 }

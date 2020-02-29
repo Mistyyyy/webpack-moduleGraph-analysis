@@ -1,9 +1,11 @@
 
 const express = require('express');
+const Websocket = require('ws').Server;
 const path = require('path');
 const { bold } = require('chalk');
 const opener = require('opener');
 const config = require('../webpack.config.js');
+const { getNodes, getEdges } = require('./data.js');
 
 
 const ROOT_DIR = '../public';
@@ -14,7 +16,9 @@ app.use(express.static(path.join(__dirname, ROOT_DIR)))
 
 module.exports = (opt) => {
   const { host, port } = opt;
-  console.log(host);
+
+
+  const ws = new Websocket({ port: port + 1, host: '0.0.0.0' });
 
   app.set('views', (__dirname + ROOT_DIR));
   app.set('view engine', 'html');
@@ -45,6 +49,16 @@ module.exports = (opt) => {
 
           opener(url);
       }
+    })
+  })
+
+  ws.on('open', conn => {
+    conn.on('message', msg => {
+      const data = {
+        nodes,
+        edges,
+      }
+      conn.send(JSON.stringify(data));
     })
   })
 

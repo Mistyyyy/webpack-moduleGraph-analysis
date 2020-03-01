@@ -1,6 +1,6 @@
 {
   "name": "webpack-modulegraph-analysis",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "show moduleGraph in graph views",
   "main": "./lib/index.js",
   "scripts": {

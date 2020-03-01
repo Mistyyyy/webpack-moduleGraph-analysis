@@ -18,7 +18,7 @@ module.exports = (opt) => {
   const { host, port } = opt;
 
 
-  const ws = new Websocket({ port: port + 1, host: '0.0.0.0' });
+  const ws = new Websocket({ port: 12300, host: '0.0.0.0' });
 
   app.set('views', (__dirname + ROOT_DIR));
   app.set('view engine', 'html');
@@ -47,18 +47,18 @@ module.exports = (opt) => {
           `Use ${bold('Ctrl+C')} to close it`
           )
 
+          ws.on('connection', conn => {
+            conn.on('message', msg => {
+              const data = {
+                nodes: getNodes(),
+                edges: getEdges(),
+              }
+              conn.send(JSON.stringify(data));
+            })
+          })
+
           opener(url);
       }
-    })
-  })
-
-  ws.on('open', conn => {
-    conn.on('message', msg => {
-      const data = {
-        nodes,
-        edges,
-      }
-      conn.send(JSON.stringify(data));
     })
   })
 

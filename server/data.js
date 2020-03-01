@@ -8,4 +8,4 @@ module.exports.getNodes = () => nodes;
 
 module.exports.setEdges = (edge) => edges = edge;
 
-module.exports.getEdge = () => edges;
+module.exports.getEdges = () => edges;

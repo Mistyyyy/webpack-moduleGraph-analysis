@@ -4,7 +4,6 @@ const Websocket = require('ws').Server;
 const path = require('path');
 const { bold } = require('chalk');
 const opener = require('opener');
-const config = require('../webpack.config.js');
 const { getNodes, getEdges } = require('./data.js');
 
 
@@ -41,7 +40,6 @@ module.exports = (opt) => {
       `${bold('Webpack Bundle Analyzer')} is started at ${bold(url)}\n` +
       `Use ${bold('Ctrl+C')} to close it`
       )
-
       ws.on('connection', conn => {
         conn.on('message', msg => {
           const data = {

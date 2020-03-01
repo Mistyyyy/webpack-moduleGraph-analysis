@@ -37,29 +37,22 @@ module.exports = (opt) => {
 
     const url = `http://${_host}:${_port}`;
 
-    const webpack = require('webpack');
+    console.log(
+      `${bold('Webpack Bundle Analyzer')} is started at ${bold(url)}\n` +
+      `Use ${bold('Ctrl+C')} to close it`
+      )
 
-    webpack(config, (err, stats) => {
-      if (err) console.error(err);
-      else {
-        console.log(
-          `${bold('Webpack Bundle Analyzer')} is started at ${bold(url)}\n` +
-          `Use ${bold('Ctrl+C')} to close it`
-          )
+      ws.on('connection', conn => {
+        conn.on('message', msg => {
+          const data = {
+            nodes: getNodes(),
+            edges: getEdges(),
+          }
+          conn.send(JSON.stringify(data));
+        })
+      })
 
-          ws.on('connection', conn => {
-            conn.on('message', msg => {
-              const data = {
-                nodes: getNodes(),
-                edges: getEdges(),
-              }
-              conn.send(JSON.stringify(data));
-            })
-          })
-
-          opener(url);
-      }
-    })
+      opener(url);
   })
 
 }

@@ -13,7 +13,12 @@
     "analysis",
     "moduleGraph"
   ],
+  "homepage": "https://github.com/Mistyyyy/webpack-moduleGraph-analysis",
   "author": "harley",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mistyyyy/webpack-moduleGraph-analysis.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.8.6",
